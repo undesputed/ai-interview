@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Fraunces, Geist, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
+import { Toaster } from 'sonner';
+import { Providers } from './providers';
 import './globals.css';
 
 const geist = Geist({
@@ -45,7 +47,20 @@ export default async function RootLayout({
     >
       <body className="font-sans antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <Providers>{children}</Providers>
+          <Toaster
+            position="bottom-right"
+            theme="light"
+            toastOptions={{
+              style: {
+                background: 'var(--color-paper)',
+                color: 'var(--color-ink)',
+                border: '1px solid var(--color-rule-strong)',
+                borderRadius: '0',
+                fontFamily: 'var(--font-sans)',
+              },
+            }}
+          />
         </NextIntlClientProvider>
       </body>
     </html>

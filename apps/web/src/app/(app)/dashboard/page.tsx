@@ -2,20 +2,27 @@ import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { AppHeader } from '@/components/organisms/AppHeader';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { StatTile } from '@/components/molecules/StatTile';
 import { RoomRow } from '@/components/molecules/RoomRow';
 import { EvaluationCard } from '@/components/molecules/EvaluationCard';
 import { InsightTile } from '@/components/molecules/InsightTile';
 import { currentUser } from '@/lib/auth/server';
+import { buildTodayEyebrow } from '@/lib/header-eyebrow';
 
 export default async function DashboardPage() {
   const user = await currentUser();
   const t = await getTranslations('Dashboard');
+  const tSidebar = await getTranslations('AppSidebar');
+  const eyebrow = await buildTodayEyebrow();
   const firstName = user?.firstName ?? '';
 
   return (
-    <div className="space-y-14">
+    <>
+      <AppHeader eyebrow={eyebrow} title={tSidebar('dashboard')} />
+      <main className="relative flex-1 px-10 py-10">
+        <div className="mx-auto w-full max-w-[1240px] space-y-14">
       {/* ────────────── Greeting hero ────────────── */}
       <section className="relative">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -34,7 +41,7 @@ export default async function DashboardPage() {
           </div>
 
           <Link
-            href="#"
+            href="/rooms/sess_01h9k2x3"
             className="group/now relative flex w-full max-w-[26rem] flex-col gap-3 border border-[var(--color-rule-strong)] bg-[var(--color-paper)] p-5 transition-colors hover:border-[var(--color-ink)] lg:max-w-[24rem]"
           >
             <div className="flex items-center justify-between">
@@ -81,6 +88,7 @@ export default async function DashboardPage() {
             title="Senior Product Designer"
             subtitle="Jamie Rivera · 45 min · AI + co-pilot"
             status="queued"
+            href="/rooms/sess_01h9k2x3"
           />
           <RoomRow
             time="15:30"
@@ -138,7 +146,9 @@ export default async function DashboardPage() {
           </Link>
         </div>
       </section>
-    </div>
+        </div>
+      </main>
+    </>
   );
 }
 

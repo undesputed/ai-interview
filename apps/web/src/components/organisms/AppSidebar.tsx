@@ -10,6 +10,7 @@ import {
   Compass,
   FileText,
   LayoutGrid,
+  MessageCircleQuestion,
   MessagesSquare,
   Mic,
   Settings,
@@ -49,9 +50,10 @@ const SECTIONS: NavSection[] = [
   {
     eyebrowKey: 'library',
     items: [
+      { labelKey: 'roles', href: '/roles', icon: ClipboardList },
+      { labelKey: 'questions', href: '/questions', icon: MessageCircleQuestion },
       { labelKey: 'candidates', href: '/candidates', icon: UsersRound },
       { labelKey: 'evaluations', href: '/evaluations', icon: FileText },
-      { labelKey: 'roles', href: '/roles', icon: ClipboardList },
     ],
   },
   {

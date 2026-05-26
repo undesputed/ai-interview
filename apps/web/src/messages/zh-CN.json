@@ -246,6 +246,7 @@
     "candidates": "候选人",
     "evaluations": "评估",
     "roles": "岗位",
+    "questions": "问题",
     "awareness": "感知",
     "insights": "洞察",
     "signals": "信号",
@@ -285,6 +286,184 @@
     "closingBlurb": "校准房间感知、检查角色设置,或步入下一个房间。",
     "calibrate": "校准感知",
     "reviewPersonas": "查看角色"
+  },
+  "Interviews": {
+    "eyebrow": "02 · 目录",
+    "title": "面试",
+    "subhead": "你的房间承载过、正在进行、即将进行的每一场对话。按需要关注的程度排序。",
+    "newInterview": "新建面试",
+    "searchPlaceholder": "搜索候选人、岗位、地点…",
+    "openCta": "打开",
+    "joinCta": "立即加入",
+    "continueCta": "继续设置",
+    "viewEvaluation": "查看评估",
+    "minutes": "分钟",
+    "left": "剩余",
+    "moreFilters": "更多筛选",
+    "segment": {
+      "all": "全部",
+      "today": "今天",
+      "upcoming": "即将",
+      "live": "进行中",
+      "completed": "已完成",
+      "draft": "草稿"
+    },
+    "status": {
+      "live": "进行中",
+      "queued": "即将开始",
+      "upcoming": "即将",
+      "scheduled": "已排期",
+      "completed": "已完成",
+      "draft": "草稿",
+      "cancelled": "已取消"
+    },
+    "aiMode": {
+      "active": "AI 主持",
+      "copilot": "AI 副驾驶",
+      "spectator": "AI 旁观"
+    },
+    "recommendation": {
+      "advance": "晋级",
+      "hold": "保留",
+      "pass": "婉拒"
+    },
+    "filter": {
+      "role": "岗位",
+      "aiMode": "AI 模式",
+      "allRoles": "全部岗位",
+      "allModes": "全部模式"
+    },
+    "empty": {
+      "title": "暂无面试。",
+      "body": "安排你的第一场面试以开始。",
+      "filteredTitle": "没有匹配的结果。",
+      "filteredBody": "在 {segment} 中没有面试匹配当前筛选条件。"
+    }
+  },
+  "NewInterview": {
+    "eyebrow": "新建面试",
+    "stepIndicator": "{current} / {total}",
+    "saveDraft": "保存为草稿",
+    "continue": "继续",
+    "back": "返回",
+    "sendInvite": "发送邀请",
+    "successToast": "邀请已发送给 {candidate}。",
+    "successFallback": "候选人",
+    "step1": {
+      "headlineLine1": "安排一场更安静的",
+      "headlineItalic": "对话。",
+      "subhead": "你将与谁见面、招聘的岗位、何时开启房间。我们会向候选人发送加入链接。"
+    },
+    "step2": {
+      "headlineLine1": "房间应该如何",
+      "headlineItalic": "运作?",
+      "subhead": "设置 AI 的存在感、它呈现的人格,以及它倾听所依据的评估标准。默认值更稳妥。"
+    },
+    "section": {
+      "candidate": "候选人",
+      "role": "岗位",
+      "schedule": "时间",
+      "conductedBy": "由谁主持",
+      "aiRole": "面试中 AI 的角色",
+      "persona": "人格",
+      "questions": "问题集"
+    },
+    "conductedBy": {
+      "ai": {
+        "label": "AI 面试官",
+        "body": "房间独立主持 —— 耐心、稳定、严格依据评分标准。"
+      },
+      "human": {
+        "label": "人类面试官",
+        "body": "你主持对话。AI 静静陪在身边。"
+      }
+    },
+    "aiRole": {
+      "copilot": {
+        "label": "AI 副驾驶",
+        "body": "倾听、跟随、私下建议追问。"
+      },
+      "spectator": {
+        "label": "AI 旁观",
+        "body": "保持沉默,仅在房间感知中提示你。"
+      }
+    },
+    "field": {
+      "candidateName": "姓名",
+      "candidateEmail": "邮箱",
+      "roleTitle": "岗位名称",
+      "location": "地点",
+      "date": "日期",
+      "time": "时间",
+      "duration": "时长",
+      "minutes": "分钟",
+      "language": "语言",
+      "personaMode": "输出",
+      "personaStyle": "风格",
+      "rubric": "评估标准",
+      "followUps": "追问"
+    },
+    "aiMode": {
+      "active": {
+        "label": "AI 主持",
+        "body": "AI 独立主持面试 —— 无需人类参与。"
+      },
+      "copilot": {
+        "label": "AI 副驾驶",
+        "body": "陪在你身边。你主持,它倾听并辅助。"
+      },
+      "spectator": {
+        "label": "AI 旁观",
+        "body": "保持沉默,只在房间感知中提示你。"
+      }
+    },
+    "personaMode": {
+      "voice": "仅语音",
+      "video": "语音 + 视频"
+    },
+    "personaStyle": {
+      "warm": "温暖、耐心",
+      "curious": "好奇、深挖",
+      "quiet": "安静、观察",
+      "formal": "正式"
+    },
+    "rubric": {
+      "custom": "自定义评估标准…"
+    },
+    "followUps": {
+      "none": "不追问",
+      "upTo": "最多 {n} 次"
+    }
+  },
+  "Questions": {
+    "eyebrow": "03 · 资料库",
+    "title": "问题",
+    "subhead": "房间可以读取的问题集合资料库。可调整为 AI 独立提问、由人类朗读,或两者通用。",
+    "newSet": "新建问题集",
+    "searchPlaceholder": "搜索问题集、问题、描述…",
+    "questionsLabel": "个问题",
+    "usedIn": "用于 {count} 场面试",
+    "updated": "更新",
+    "segment": {
+      "all": "全部",
+      "ai": "AI",
+      "human": "人类",
+      "both": "通用",
+      "draft": "草稿"
+    },
+    "audience": {
+      "ai": "AI",
+      "human": "人类",
+      "both": "通用"
+    },
+    "status": {
+      "published": "已发布",
+      "draft": "草稿"
+    },
+    "empty": {
+      "title": "暂无问题集。",
+      "body": "创建第一个问题集,开始用它配置面试。"
+    }
   },
   "Locale": {
     "label": "语言",

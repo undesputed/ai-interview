@@ -10,6 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─── Users / Auth ──────────────────────────────────────────────────────
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -21,7 +23,10 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  refreshTokens RefreshToken[]
+  refreshTokens         RefreshToken[]
+  questionSetsCreated   QuestionSet[] @relation("QuestionSetCreatedBy")
+  questionSetsUpdated   QuestionSet[] @relation("QuestionSetUpdatedBy")
+  interviewsCreated     Interview[]   @relation("InterviewCreatedBy")
 
   @@map("users")
 }
@@ -47,4 +52,194 @@ model RefreshToken {
   @@index([userId])
   @@index([familyId])
   @@map("refresh_tokens")
+}
+
+// ─── Questions library ─────────────────────────────────────────────────
+
+enum QuestionSetAudience {
+  AI
+  HUMAN
+  BOTH
+
+  @@map("question_set_audience")
+}
+
+enum QuestionSetStatus {
+  DRAFT
+  PUBLISHED
+
+  @@map("question_set_status")
+}
+
+/// A reusable bundle of interview questions, tagged for whether AI should
+/// ask them, a human should read them aloud, or both.
+model QuestionSet {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  audience    QuestionSetAudience
+  status      QuestionSetStatus    @default(DRAFT)
+  /// Locale this set is authored in (en-PH, ja-JP, zh-CN).
+  locale      String   @default("en-PH")
+  /// Role titles this set is attached to. Promoted to a Role relation later.
+  attachedRoles String[]  @default([])
+  /// Denormalized counter — number of interviews that have referenced this set.
+  /// Maintained by the service; will be derived from the sessions table later.
+  usedInInterviews Int   @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdById String
+  updatedById String
+
+  createdBy   User     @relation("QuestionSetCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User     @relation("QuestionSetUpdatedBy", fields: [updatedById], references: [id])
+
+  questions   Question[]
+  interviews  Interview[]
+
+  @@index([status])
+  @@index([audience])
+  @@index([createdById])
+  @@map("question_sets")
+}
+
+/// One question inside a QuestionSet. Order is controlled by `position`.
+model Question {
+  id            String   @id @default(cuid())
+  questionSetId String
+  text          String
+  /// Optional rubric signal / what to listen for (e.g. "Judgment · restraint").
+  signal        String?
+  /// Maximum allowed follow-up depth for this question (0–10).
+  maxFollowUps  Int?
+  /// Ordering within the set. Lower = earlier. Service guarantees stable values.
+  position      Int
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  questionSet   QuestionSet @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
+
+  @@index([questionSetId, position])
+  @@map("questions")
+}
+
+// ─── Candidates & Interviews ──────────────────────────────────────────
+
+/// Person being interviewed. Candidates don't have user accounts — they
+/// arrive at the room via a one-time signed link emailed to them.
+/// Find-or-create by email at interview creation time.
+model Candidate {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  /// Optional preferred locale; falls back to the interview's locale.
+  preferredLocale String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  interviews  Interview[]
+
+  @@map("candidates")
+}
+
+enum InterviewStatus {
+  /// Saved by the host but not yet scheduled (missing fields or paused).
+  DRAFT
+  /// Scheduled with a future `scheduledAt`. UPCOMING / QUEUED are derived
+  /// from scheduledAt vs. "now" by the service — not stored.
+  SCHEDULED
+  /// Currently happening (room is open).
+  LIVE
+  /// Interview finished and evaluation submitted.
+  COMPLETED
+  /// Host cancelled before it started.
+  CANCELLED
+
+  @@map("interview_status")
+}
+
+enum InterviewConductedBy {
+  AI
+  HUMAN
+
+  @@map("interview_conducted_by")
+}
+
+enum InterviewAIRole {
+  COPILOT
+  SPECTATOR
+
+  @@map("interview_ai_role")
+}
+
+enum InterviewPersonaMode {
+  VOICE
+  VIDEO
+
+  @@map("interview_persona_mode")
+}
+
+enum InterviewRecommendation {
+  ADVANCE
+  HOLD
+  PASS
+
+  @@map("interview_recommendation")
+}
+
+model Interview {
+  id              String              @id @default(cuid())
+
+  // Candidate
+  candidateId     String
+  candidate       Candidate           @relation(fields: [candidateId], references: [id])
+
+  // Role being interviewed for
+  roleTitle       String
+  roleLocation    String              @default("")
+
+  // Schedule
+  scheduledAt     DateTime
+  durationMin     Int                 @default(45)
+  /// Conversation locale (en-PH, ja-JP, zh-CN).
+  language        String              @default("en-PH")
+
+  // Conducted by — primary choice
+  conductedBy     InterviewConductedBy @default(HUMAN)
+  /// Only meaningful when conductedBy === HUMAN. Null when AI runs solo.
+  aiRole          InterviewAIRole?
+
+  // AI persona config (applies when AI participates)
+  personaMode     InterviewPersonaMode @default(VIDEO)
+  personaStyle    String              @default("warm")
+
+  // Question set / rubric
+  questionSetId   String?
+  questionSet     QuestionSet?        @relation(fields: [questionSetId], references: [id])
+  /// Max follow-up depth across the whole interview.
+  followUps       Int                 @default(2)
+
+  status          InterviewStatus     @default(DRAFT)
+
+  // Outcomes (filled after completion)
+  score           Float?
+  recommendation  InterviewRecommendation?
+  pullQuote       String?
+
+  // Ownership
+  createdById     String
+  createdBy       User                @relation("InterviewCreatedBy", fields: [createdById], references: [id])
+
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([createdById])
+  @@index([candidateId])
+  @@map("interviews")
 }

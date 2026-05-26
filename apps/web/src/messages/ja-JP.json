@@ -246,6 +246,7 @@
     "candidates": "候補者",
     "evaluations": "評価",
     "roles": "役職",
+    "questions": "質問",
     "awareness": "アウェアネス",
     "insights": "インサイト",
     "signals": "シグナル",
@@ -285,6 +286,184 @@
     "closingBlurb": "ルームアウェアネスを調整、ペルソナ設定を確認、または次のルームへ。",
     "calibrate": "アウェアネス調整",
     "reviewPersonas": "ペルソナ確認"
+  },
+  "Interviews": {
+    "eyebrow": "02 · カタログ",
+    "title": "面接",
+    "subhead": "あなたのルームで行われた、行われている、これから行われる対話のすべて。注意を要するものから順に並んでいます。",
+    "newInterview": "新規面接",
+    "searchPlaceholder": "候補者、役職、地域を検索…",
+    "openCta": "開く",
+    "joinCta": "参加",
+    "continueCta": "セットアップ続行",
+    "viewEvaluation": "評価を見る",
+    "minutes": "分",
+    "left": "残り",
+    "moreFilters": "他のフィルター",
+    "segment": {
+      "all": "すべて",
+      "today": "本日",
+      "upcoming": "今後",
+      "live": "ライブ",
+      "completed": "完了",
+      "draft": "下書き"
+    },
+    "status": {
+      "live": "進行中",
+      "queued": "まもなく開始",
+      "upcoming": "予定",
+      "scheduled": "予定済み",
+      "completed": "完了",
+      "draft": "下書き",
+      "cancelled": "キャンセル"
+    },
+    "aiMode": {
+      "active": "AIアクティブ",
+      "copilot": "AIコパイロット",
+      "spectator": "AIスペクテーター"
+    },
+    "recommendation": {
+      "advance": "通過",
+      "hold": "保留",
+      "pass": "見送り"
+    },
+    "filter": {
+      "role": "役職",
+      "aiMode": "AIモード",
+      "allRoles": "すべての役職",
+      "allModes": "すべてのモード"
+    },
+    "empty": {
+      "title": "まだ面接がありません。",
+      "body": "最初の面接を予定してください。",
+      "filteredTitle": "該当するものがありません。",
+      "filteredBody": "{segment} の現在のフィルターに一致する面接はありません。"
+    }
+  },
+  "NewInterview": {
+    "eyebrow": "新規面接",
+    "stepIndicator": "{current} / {total}",
+    "saveDraft": "下書きとして保存",
+    "continue": "次へ",
+    "back": "戻る",
+    "sendInvite": "招待を送信",
+    "successToast": "{candidate} に招待を送信しました。",
+    "successFallback": "候補者",
+    "step1": {
+      "headlineLine1": "より静かな対話を",
+      "headlineItalic": "予定する。",
+      "subhead": "誰と会うか、どの役職か、いつルームが開くか。候補者には参加用リンクをお送りします。"
+    },
+    "step2": {
+      "headlineLine1": "ルームをどう",
+      "headlineItalic": "ふるまわせる?",
+      "subhead": "AIの存在感、見せるペルソナ、評価基準を設定します。既定値は安全側の選択です。"
+    },
+    "section": {
+      "candidate": "候補者",
+      "role": "役職",
+      "schedule": "スケジュール",
+      "conductedBy": "実施者",
+      "aiRole": "面接中のAIの役割",
+      "persona": "ペルソナ",
+      "questions": "質問セット"
+    },
+    "conductedBy": {
+      "ai": {
+        "label": "AI面接官",
+        "body": "AIが単独で進行 ― 忍耐強く、一貫して、評価基準に沿って。"
+      },
+      "human": {
+        "label": "人間の面接官",
+        "body": "あなたが対話を進める。AIはあなたの傍らに控える。"
+      }
+    },
+    "aiRole": {
+      "copilot": {
+        "label": "AIコパイロット",
+        "body": "耳を傾け、追跡し、追加質問を内密に提案。"
+      },
+      "spectator": {
+        "label": "AIスペクテーター",
+        "body": "発話なし。ルームアウェアネスのみ通知。"
+      }
+    },
+    "field": {
+      "candidateName": "氏名",
+      "candidateEmail": "メール",
+      "roleTitle": "役職名",
+      "location": "勤務地",
+      "date": "日付",
+      "time": "時刻",
+      "duration": "所要時間",
+      "minutes": "分",
+      "language": "言語",
+      "personaMode": "出力",
+      "personaStyle": "スタイル",
+      "rubric": "評価基準",
+      "followUps": "追加質問"
+    },
+    "aiMode": {
+      "active": {
+        "label": "AIアクティブ",
+        "body": "AIが単独で面接を進行 ― 人間は不要。"
+      },
+      "copilot": {
+        "label": "AIコパイロット",
+        "body": "あなたと並んで座る。あなたが進行し、AIが支援。"
+      },
+      "spectator": {
+        "label": "AIスペクテーター",
+        "body": "発話なし。ルームアウェアネスのみ通知。"
+      }
+    },
+    "personaMode": {
+      "voice": "音声のみ",
+      "video": "音声+映像"
+    },
+    "personaStyle": {
+      "warm": "温かく忍耐強く",
+      "curious": "好奇心を持って掘り下げる",
+      "quiet": "静かに観察する",
+      "formal": "丁寧で形式的"
+    },
+    "rubric": {
+      "custom": "カスタム評価基準…"
+    },
+    "followUps": {
+      "none": "追加質問なし",
+      "upTo": "最大 {n} 回"
+    }
+  },
+  "Questions": {
+    "eyebrow": "03 · ライブラリー",
+    "title": "質問",
+    "subhead": "ルームが参照する質問セットのライブラリー。AIが単独で問う用、人間が読み上げる用、その両方に調整できます。",
+    "newSet": "新規質問セット",
+    "searchPlaceholder": "セット、質問、説明を検索…",
+    "questionsLabel": "質問",
+    "usedIn": "{count} 件の面接で使用",
+    "updated": "更新",
+    "segment": {
+      "all": "すべて",
+      "ai": "AI",
+      "human": "人間",
+      "both": "両方",
+      "draft": "下書き"
+    },
+    "audience": {
+      "ai": "AI",
+      "human": "人間",
+      "both": "両方"
+    },
+    "status": {
+      "published": "公開済み",
+      "draft": "下書き"
+    },
+    "empty": {
+      "title": "まだ質問セットがありません。",
+      "body": "最初のセットを作成して、面接の設定に利用しましょう。"
+    }
   },
   "Locale": {
     "label": "言語",

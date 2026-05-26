@@ -10,6 +10,8 @@ interface RoomRowProps {
   tag?: string;
   /** Status dot color hint */
   status?: 'upcoming' | 'live' | 'queued';
+  /** Destination — defaults to "#" so existing usage isn't broken */
+  href?: string;
 }
 
 const STATUS_COPY: Record<NonNullable<RoomRowProps['status']>, { dot: string; label: string }> = {
@@ -25,13 +27,14 @@ export function RoomRow({
   subtitle,
   tag,
   status = 'upcoming',
+  href = '#',
 }: RoomRowProps) {
   const Icon = type === 'interview' ? Mic : MessagesSquare;
   const statusInfo = STATUS_COPY[status];
 
   return (
     <a
-      href="#"
+      href={href}
       className={cn(
         'group/row grid grid-cols-[88px_22px_1fr_auto_22px] items-center gap-4',
         'border-b border-[var(--color-rule)] py-4 transition-colors last:border-b-0',

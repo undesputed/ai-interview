@@ -246,6 +246,7 @@
     "candidates": "Candidates",
     "evaluations": "Evaluations",
     "roles": "Roles",
+    "questions": "Questions",
     "awareness": "Awareness",
     "insights": "Insights",
     "signals": "Signals",
@@ -285,6 +286,184 @@
     "closingBlurb": "Calibrate Room Awareness, review the persona settings, or step into your next room.",
     "calibrate": "CALIBRATE AWARENESS",
     "reviewPersonas": "REVIEW PERSONAS"
+  },
+  "Interviews": {
+    "eyebrow": "02 · Catalog",
+    "title": "Interviews",
+    "subhead": "Every conversation your room has held, is holding, or is about to hold. Sorted by what needs your attention.",
+    "newInterview": "New interview",
+    "searchPlaceholder": "Search candidates, roles, locations…",
+    "openCta": "Open",
+    "joinCta": "Join now",
+    "continueCta": "Continue setup",
+    "viewEvaluation": "View evaluation",
+    "minutes": "min",
+    "left": "left",
+    "moreFilters": "More filters",
+    "segment": {
+      "all": "All",
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "live": "Live",
+      "completed": "Completed",
+      "draft": "Drafts"
+    },
+    "status": {
+      "live": "Live now",
+      "queued": "Live soon",
+      "upcoming": "Upcoming",
+      "scheduled": "Scheduled",
+      "completed": "Completed",
+      "draft": "Draft",
+      "cancelled": "Cancelled"
+    },
+    "aiMode": {
+      "active": "AI active",
+      "copilot": "AI co-pilot",
+      "spectator": "AI spectator"
+    },
+    "recommendation": {
+      "advance": "Advance",
+      "hold": "Hold",
+      "pass": "Pass"
+    },
+    "filter": {
+      "role": "Role",
+      "aiMode": "AI mode",
+      "allRoles": "All roles",
+      "allModes": "All modes"
+    },
+    "empty": {
+      "title": "No interviews yet.",
+      "body": "Schedule your first interview to begin.",
+      "filteredTitle": "Nothing matches that.",
+      "filteredBody": "No interviews match the current filters in {segment}."
+    }
+  },
+  "NewInterview": {
+    "eyebrow": "New interview",
+    "stepIndicator": "{current} of {total}",
+    "saveDraft": "save as draft",
+    "continue": "Continue",
+    "back": "Back",
+    "sendInvite": "Send invite",
+    "successToast": "Invite sent to {candidate}.",
+    "successFallback": "your candidate",
+    "step1": {
+      "headlineLine1": "Schedule a quieter",
+      "headlineItalic": "conversation.",
+      "subhead": "Who you’re meeting, the role you’re hiring for, and when the room opens. We’ll send a join link to the candidate."
+    },
+    "step2": {
+      "headlineLine1": "How should the room",
+      "headlineItalic": "behave?",
+      "subhead": "Set the AI’s presence, the persona it shows, and the rubric it should listen against. Defaults are the safer choices."
+    },
+    "section": {
+      "candidate": "Candidate",
+      "role": "Role",
+      "schedule": "Schedule",
+      "conductedBy": "Conducted by",
+      "aiRole": "AI role during the interview",
+      "persona": "Persona",
+      "questions": "Question set"
+    },
+    "conductedBy": {
+      "ai": {
+        "label": "AI Interviewer",
+        "body": "The room runs by itself — patient, consistent, on rubric."
+      },
+      "human": {
+        "label": "Human interviewer",
+        "body": "You lead the conversation. AI sits beside you."
+      }
+    },
+    "aiRole": {
+      "copilot": {
+        "label": "AI co-pilot",
+        "body": "Listens, follows along, suggests follow-ups privately."
+      },
+      "spectator": {
+        "label": "AI spectator",
+        "body": "Stays silent. Only Room Awareness nudges you."
+      }
+    },
+    "field": {
+      "candidateName": "Name",
+      "candidateEmail": "Email",
+      "roleTitle": "Role title",
+      "location": "Location",
+      "date": "Date",
+      "time": "Time",
+      "duration": "Duration",
+      "minutes": "min",
+      "language": "Language",
+      "personaMode": "Output",
+      "personaStyle": "Style",
+      "rubric": "Rubric",
+      "followUps": "Follow-ups"
+    },
+    "aiMode": {
+      "active": {
+        "label": "AI active",
+        "body": "Runs the interview alone — no human required."
+      },
+      "copilot": {
+        "label": "AI co-pilot",
+        "body": "Sits beside you. You lead, it listens and helps."
+      },
+      "spectator": {
+        "label": "AI spectator",
+        "body": "Silent. Only Room Awareness nudges you."
+      }
+    },
+    "personaMode": {
+      "voice": "Voice only",
+      "video": "Voice + video"
+    },
+    "personaStyle": {
+      "warm": "Warm and patient",
+      "curious": "Curious and probing",
+      "quiet": "Quiet and observing",
+      "formal": "Formal"
+    },
+    "rubric": {
+      "custom": "Custom rubric…"
+    },
+    "followUps": {
+      "none": "No follow-ups",
+      "upTo": "Up to {n}"
+    }
+  },
+  "Questions": {
+    "eyebrow": "03 · Library",
+    "title": "Questions",
+    "subhead": "The library of question sets the room can read from. Tune them for an AI to ask alone, for a human to read aloud, or for both.",
+    "newSet": "New question set",
+    "searchPlaceholder": "Search sets, questions, descriptions…",
+    "questionsLabel": "{count, plural, one {question} other {questions}}",
+    "usedIn": "{count, plural, one {used in 1 interview} other {used in # interviews}}",
+    "updated": "edited",
+    "segment": {
+      "all": "All",
+      "ai": "AI",
+      "human": "Human",
+      "both": "Both",
+      "draft": "Drafts"
+    },
+    "audience": {
+      "ai": "AI",
+      "human": "Human",
+      "both": "Both"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "empty": {
+      "title": "No question sets yet.",
+      "body": "Build your first set to start configuring interviews against it."
+    }
   },
   "Locale": {
     "label": "Language",
