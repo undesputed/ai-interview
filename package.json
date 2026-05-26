@@ -1,0 +1,39 @@
+{
+  "name": "ai-interview-v2",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Monorepo for molave.ai — AI interview platform (Next.js 16 web + NestJS API + shared types).",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "dev:web": "pnpm --filter @ai-interview/web dev",
+    "dev:api": "pnpm --filter @ai-interview/api dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "docker:up": "docker compose up -d",
+    "docker:up:build": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "docker:reset": "docker compose down -v && docker compose up -d --build",
+    "db:migrate": "pnpm --filter @ai-interview/api db:migrate",
+    "db:push": "pnpm --filter @ai-interview/api db:push",
+    "db:reset": "pnpm --filter @ai-interview/api db:reset",
+    "db:studio": "pnpm --filter @ai-interview/api db:studio",
+    "db:generate": "pnpm --filter @ai-interview/api db:generate",
+    "shared:build": "pnpm --filter @ai-interview/shared build",
+    "shared:dev": "pnpm --filter @ai-interview/shared dev"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

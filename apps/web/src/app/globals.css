@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm editorial palette — molave wood inspired */
+  --color-canvas: oklch(0.972 0.012 84);     /* ivory left panel */
+  --color-paper: oklch(0.945 0.018 78);      /* cream right panel */
+  --color-ink: oklch(0.205 0.026 60);        /* deep espresso */
+  --color-ink-soft: oklch(0.34 0.022 62);    /* warm graphite */
+  --color-muted: oklch(0.52 0.020 65);       /* warm gray */
+  --color-rule: oklch(0.82 0.022 75);        /* soft hairline */
+  --color-rule-strong: oklch(0.68 0.028 72); /* heavier rule */
+  --color-amber: oklch(0.58 0.142 50);       /* molave accent */
+  --color-amber-deep: oklch(0.46 0.130 48);
+  --color-amber-soft: oklch(0.91 0.045 72);  /* tinted wash */
+
+  /* Type */
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  /* Easing */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html,
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+  body {
+    /* Geist: ss03 enables one-storey 'a', cv11 alt 'l' — small refinements */
+    font-feature-settings: "ss03", "cv11";
+    /* CJK fallbacks for ja-JP / zh-CN locales — system fonts keep payload light */
+    font-family:
+      var(--font-sans),
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Yu Gothic", "Meiryo",
+      "PingFang SC", "Microsoft YaHei", "Source Han Sans SC",
+      ui-sans-serif, system-ui, -apple-system, sans-serif;
+  }
+  /* Force the display font to use system serifs in CJK to avoid Fraunces
+     falling back to a tofu glyph — system serifs handle CJK well. */
+  :lang(ja) .font-display,
+  :lang(zh) .font-display {
+    font-family:
+      var(--font-display),
+      "Hiragino Mincho ProN", "Yu Mincho", "MS Mincho",
+      "Songti SC", "SimSun", "Source Han Serif SC",
+      Georgia, serif;
+  }
+  ::selection {
+    background: var(--color-amber-soft);
+    color: var(--color-ink);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Room-dark theme — scoped to .room-dark wrapper. Only the live
+   interview room uses this. Keeps the global app warm/light.
+   Translates the molave palette into a low-light register: deep
+   espresso surfaces, warm cream ink, amber stays the accent.
+   ────────────────────────────────────────────────────────────── */
+.room-dark {
+  --color-canvas: oklch(0.165 0.018 60);
+  --color-paper: oklch(0.215 0.020 60);
+  --color-ink: oklch(0.94 0.014 80);
+  --color-ink-soft: oklch(0.78 0.018 70);
+  --color-muted: oklch(0.58 0.014 65);
+  --color-rule: oklch(0.30 0.018 60);
+  --color-rule-strong: oklch(0.42 0.020 62);
+  --color-amber: oklch(0.74 0.16 60);
+  --color-amber-deep: oklch(0.64 0.15 55);
+  --color-amber-soft: oklch(0.32 0.06 58);
+  --color-live: oklch(0.68 0.20 25);
+
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  color-scheme: dark;
+}
+
+@layer utilities {
+  /* Editorial display — Fraunces tuned for headlines.
+     opsz=144 → display optical size; SOFT=100 → warmer terminals;
+     wght=400 keeps it from feeling heavy. */
+  .font-display {
+    font-family: var(--font-display), "Times New Roman", Georgia, serif;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "wght" 400;
+    font-feature-settings: "liga", "dlig", "ss01";
+    letter-spacing: -0.01em;
+  }
+  /* Smaller editorial uses (body italics, captions) — switch to text optical size. */
+  .font-display-text {
+    font-family: var(--font-display), Georgia, serif;
+    font-variation-settings: "opsz" 14, "SOFT" 50, "wght" 400;
+  }
+  .font-mono {
+    font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+    font-feature-settings: "ss01", "ss02";
+  }
+  .num-tabular {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Tactile grain — adds paper-like noise overlay */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.42;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18  0 0 0 0 0.13  0 0 0 0 0.09  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Subtle warm gradient wash on the editorial panel */
+  .wash {
+    background:
+      radial-gradient(60% 50% at 15% 12%, oklch(0.94 0.05 70 / 0.55), transparent 70%),
+      radial-gradient(80% 70% at 90% 90%, oklch(0.88 0.07 55 / 0.45), transparent 65%),
+      var(--color-canvas);
+  }
+
+  /* Hairline underline input field */
+  .field-line {
+    border: 0;
+    border-bottom: 1px solid var(--color-rule);
+    background: transparent;
+    padding: 0.5rem 0;
+    width: 100%;
+    font: inherit;
+    color: var(--color-ink);
+    outline: none;
+    transition: border-color 220ms var(--ease-out-quart);
+  }
+  .field-line::placeholder {
+    color: oklch(0.65 0.015 65);
+  }
+  .field-line:focus {
+    border-bottom-color: var(--color-amber);
+  }
+  .field-line:hover:not(:focus) {
+    border-bottom-color: var(--color-rule-strong);
+  }
+
+  /* Live pulse for awareness / connection dots */
+  @keyframes pulse-warm {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.18);
+    }
+  }
+  .pulse-warm {
+    animation: pulse-warm 2200ms ease-in-out infinite;
+  }
+
+  /* Entrance animations */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 600;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .rise {
+    animation: rise 900ms var(--ease-out-quart) both;
+  }
+  .fade {
+    animation: fade 1200ms var(--ease-out-quart) both;
+  }
+}

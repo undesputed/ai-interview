@@ -1,0 +1,50 @@
+// molave.ai data model.
+// Iterate freely — this is the starting schema, not the contract.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  firstName    String
+  lastName     String
+  company      String?
+  passwordHash String
+  locale       String   @default("en-PH")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+/// Refresh tokens are stored hashed (never raw).
+/// One row per active session — rotated on every refresh.
+/// `revokedAt` is set when a token is rotated or reuse is detected.
+model RefreshToken {
+  id          String   @id @default(cuid())
+  userId      String
+  tokenHash   String   @unique
+  // Optional family id so we can revoke an entire chain on reuse detection.
+  familyId    String
+  userAgent   String?
+  ipAddress   String?
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  revokedAt   DateTime?
+  replacedBy  String?
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("refresh_tokens")
+}

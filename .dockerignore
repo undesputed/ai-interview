@@ -1,0 +1,28 @@
+**/node_modules
+**/.next
+**/dist
+**/build
+**/coverage
+**/.turbo
+**/.cache
+
+.git
+.gitignore
+.github
+.vscode
+.idea
+.DS_Store
+
+# Logs
+**/*.log
+
+# Local env
+.env
+.env.local
+.env.*.local
+**/.env.local
+
+# Docs / scratch
+docs
+README.md
+CLAUDE.md

@@ -1,0 +1,95 @@
+name: molave-ai
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: molave-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: molave
+      POSTGRES_PASSWORD: molave_local
+      POSTGRES_DB: molave
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U molave -d molave"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: dev
+    container_name: molave-api
+    restart: unless-stopped
+    ports:
+      - "8787:8787"
+    environment:
+      NODE_ENV: development
+      PORT: 8787
+      WEB_ORIGIN: http://localhost:3000
+      DATABASE_URL: postgresql://molave:molave_local@postgres:5432/molave?schema=public
+      # Dev-only secret. Replace per-environment in prod via a real secret store.
+      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-please-replace-in-production-do-not-ship-this-value}
+    volumes:
+      # Live-reload source. Anonymous volumes preserve container node_modules.
+      - ./apps/api/src:/app/apps/api/src
+      - ./apps/api/prisma:/app/apps/api/prisma
+      - ./apps/api/nest-cli.json:/app/apps/api/nest-cli.json
+      - ./apps/api/tsconfig.json:/app/apps/api/tsconfig.json
+      # shared is consumed from dist/ — built on host (`pnpm shared:build`)
+      # or via the shared watcher. package.json mounted so metadata edits
+      # propagate without rebuild.
+      - ./packages/shared/src:/app/packages/shared/src
+      - ./packages/shared/dist:/app/packages/shared/dist
+      - ./packages/shared/package.json:/app/packages/shared/package.json
+      - api_node_modules:/app/apps/api/node_modules
+      - root_node_modules:/app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: dev
+    container_name: molave-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      # Browser → api (host port). NEXT_PUBLIC_ is exposed to client JS.
+      NEXT_PUBLIC_API_URL: http://localhost:8787
+      # Server (web container) → api over the docker network.
+      # The host `localhost` is the web container itself, not the api.
+      INTERNAL_API_URL: http://api:8787
+      # Next.js telemetry off in container — keeps logs clean
+      NEXT_TELEMETRY_DISABLED: 1
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/public:/app/apps/web/public
+      - ./apps/web/next.config.ts:/app/apps/web/next.config.ts
+      - ./apps/web/postcss.config.mjs:/app/apps/web/postcss.config.mjs
+      - ./apps/web/tsconfig.json:/app/apps/web/tsconfig.json
+      - ./apps/web/components.json:/app/apps/web/components.json
+      - ./packages/shared/src:/app/packages/shared/src
+      - ./packages/shared/dist:/app/packages/shared/dist
+      - ./packages/shared/package.json:/app/packages/shared/package.json
+      - web_node_modules:/app/apps/web/node_modules
+      - web_next:/app/apps/web/.next
+      - root_node_modules:/app/node_modules
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+  root_node_modules:
+  api_node_modules:
+  web_node_modules:
+  web_next:
